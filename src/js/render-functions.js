@@ -12,11 +12,11 @@ export function renderGallery(images) {
       src="${webformatURL}"
       alt="${tags}"
     />
-    <ul>
-      <li><span>Comments</span><span>${comments}</span></li>
-      <li><span>Views</span><span>${views}</span></li>
-      <li><span>Likes</span><span>${likes}</span></li>
-      <li><span>Download</span><span>${downloads}</span></li>
+    <ul class="gallery">
+      <li class="li-text"><span>Comments</span><span>${comments}</span></li>
+      <li class="li-text"><span>Views</span><span>${views}</span></li>
+      <li class="li-text"><span>Likes</span><span>${likes}</span></li>
+      <li class="li-text"><span>Download</span><span>${downloads}</span></li>
     </ul>
   </li>`
   } 
