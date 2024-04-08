@@ -8,6 +8,7 @@ formElem.addEventListener('submit', (e) => {
     const query = formElem.elements.input.value;
 showLoader();
     fetchImages(query).then(res => { renderGallery(res); hideLoader();});
+    
    
 }) 
 
