@@ -1,53 +1,55 @@
-import iziToast from "izitoast";
-import "izitoast/dist/css/iziToast.min.css";
+import iziToast from "izitoast"; 
+import "izitoast/dist/css/iziToast.min.css"; 
 
 
+const API_KEY = '42454875-eb3549610f297412779ff13b6';
+ 
+export function fetchImages (searchImg){
 
+  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchImg}&image_type=photo&orientation=horizontal&safesearch=true`;
 
-const API_KEY = '42454875-eb3549610f297412779ff13b6'; 
-export const fetchImages = async (searchTerm) => {
-  const url = `https://pixabay.com/api/?key=${API_KEY}&q=${searchTerm}&image_type=photo&orientation=horizontal&safesearch=true`;
+// const BASE_URL = 'https://pixabay.com/api';
+// const END_POINT = '/key';
+// const params = new URLSearchParams({
+//       q: 'searchImg',
+//       image_type:'photo',
+//       orientation: 'horizontal',
+//       safesearch: true
+   
+// })
+// const url = `${BASE_URL}${END_POINT}${API_KEY}${params}`;
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.hits;
-  } catch (error) {
-    console.error('Error fetching images:', error);
-    return [];
-  }
+return fetch(url).then(response =>{
 
+    if (!response.ok){
+      throw new Error ('');
+    }
 
+    return response.json();
+})
 
-  // fetchImages(query)
-  // .then(res => {
-  //     if (res.length === 0) {
-  //         // Показати повідомлення про помилку, якщо відповідь порожня
-  //         iziToast.error({
-  //             title: 'Помилка',
-  //             message: 'Вибачте, не знайдено зображень, які відповідають вашому запиту. Будь ласка, спробуйте ще раз!'
-  //         });
-  //     } else {
-  //         renderGallery(res);
-  //     }
+    .then(data =>{
+      if(data.hits.length > 0){
+        return data.hits
+      }
+      else {
+        iziToast.error({
+          position: "center",
+          title: 'Error',
+          message: 'Sorry, there are no images matching your search query. Please try again!'
+        });
+        return [];
+      }
 
-  //     hideLoader();
-  // })
-  // .catch(error => {
-  //     // Показати повідомлення про помилку для будь-яких помилок під час виклику fetch
-  //     iziToast.error({
-  //         title: 'Помилка',
-  //         message: 'Під час отримання зображень виникла помилка. Будь ласка, спробуйте ще раз пізніше.'
-  //     });
-  //     console.error('Помилка при отриманні зображень:', error);
-  //     hideLoader();
-  // });
+    })
+    .catch(error => {
+      iziToast.error({
+        position: "center",
+        title: 'Error',
+        message: 'Sorry, there are no images matching your search query. Please try again!'
+      });
 
+      return [];
+    })
 
-
-}; 
-
-iziToast.show({
-  title: 'Hey',
-  message: 'What would you like to add?'
-});
+    }
